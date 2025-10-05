@@ -3,38 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invitación de Fiesta</title>
+  <title>XV Años de Mairim Bermudes García</title>
+
+  <!-- Fuente y estilo -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #ffe0f0, #fff);
+      background: linear-gradient(to bottom right, #fff0f3, #ffe6e9);
+      color: #333;
       text-align: center;
       margin: 0;
       padding: 0;
-      color: #444;
     }
 
     header {
-      background: url('https://i.imgur.com/WoKx0iV.jpg') center/cover;
+      background: url('https://i.imgur.com/wT2Xv1f.jpg') center/cover;
       color: white;
       padding: 80px 20px;
       text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      border-bottom: 5px solid #b71c1c;
     }
 
     header h1 {
       font-size: 3em;
       margin: 0;
+      font-weight: 600;
     }
 
     header h2 {
-      font-weight: 400;
-      margin: 10px 0 0 0;
-      font-size: 1.5em;
+      font-size: 1.8em;
+      margin-top: 10px;
+      font-weight: 300;
     }
 
     section {
-      padding: 30px 15px;
+      padding: 40px 15px;
+    }
+
+    #confirmacion {
+      margin-top: 20px;
     }
 
     #confirmacion form {
@@ -42,10 +51,12 @@
       background: white;
       text-align: left;
       padding: 25px;
-      border-radius: 15px;
+      border-radius: 20px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
     #confirmacion input,
@@ -60,47 +71,84 @@
     }
 
     #confirmacion button {
-      background: #e91e63;
+      background: #c62828;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 12px;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
       width: 100%;
       margin-top: 10px;
+      transition: 0.3s;
     }
 
     #confirmacion button:hover {
-      background: #c2185b;
+      background: #8e0000;
+    }
+
+    #addAcomp {
+      background: #f8bbd0;
+      color: #880e4f;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    #addAcomp:hover {
+      background: #f48fb1;
     }
 
     #respuesta {
-      color: green;
-      font-weight: bold;
-      margin-top: 10px;
       display: none;
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #2e7d32;
     }
 
     footer {
+      background: #b71c1c;
+      color: white;
+      padding: 20px;
       margin-top: 40px;
       font-size: 0.9em;
-      color: #777;
+    }
+
+    /* Confeti animado */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: red;
+      border-radius: 50%;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>🎀 Fiesta de Quince Años 🎀</h1>
-    <h2><strong><!-- Cambia aquí el nombre de la festejada --></strong> Sofía Martínez</h2>
-    <p>📅 15 de noviembre de 2025 • 🕖 7:00 PM</p>
+    <h1>💐 XV Años 💐</h1>
+    <h2><strong>Mairim Bermudes García</strong></h2>
+    <p>📅 23 de noviembre de 2025 • 🕖 7:00 PM</p>
     <p>📍 Salón Real del Valle, Ensenada B.C.</p>
   </header>
 
   <section>
-    <h2>¡Estás invitado a celebrar conmigo!</h2>
-    <p>Confirma tu asistencia llenando el siguiente formulario:</p>
+    <h2>¡Estás invitado a celebrar conmigo! 🌹</h2>
+    <p>Tu presencia hará de este día un recuerdo inolvidable.  
+      Por favor, confirma tu asistencia llenando el siguiente formulario:</p>
 
     <div id="confirmacion">
       <form id="formRSVP">
@@ -123,47 +171,77 @@
           <option value="No">No podré ir</option>
         </select>
 
-        <label>Acompañantes (opcional)</label>
-        <input type="text" name="AcompananteNombre[]" placeholder="Acompañante 1">
-        <input type="text" name="AcompananteNombre[]" placeholder="Acompañante 2">
+        <div id="acompanantes">
+          <label>Acompañantes:</label>
+          <input type="text" name="AcompananteNombre[]" placeholder="Nombre del acompañante">
+        </div>
+
+        <button type="button" id="addAcomp">+ Agregar otro acompañante</button>
 
         <label>Mensaje:</label>
-        <textarea name="Mensaje" rows="3" placeholder="Escribe un mensaje para la festejada..."></textarea>
+        <textarea name="Mensaje" rows="3" placeholder="Escribe un mensaje para Mairim..."></textarea>
 
         <button type="submit">Enviar confirmación</button>
       </form>
 
-      <p id="respuesta">🎉 ¡Gracias! Tu confirmación fue registrada.</p>
+      <p id="respuesta"></p>
     </div>
   </section>
 
   <footer>
-    <p>Con cariño de la familia Martínez 💕</p>
+    <p>Con cariño de la familia Bermudes 💕</p>
   </footer>
 
   <script>
+    // URL de tu Google Apps Script
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzd1l34XwkisHZ8J3dmmW6u5YSs2FJUm1uWW1Y7DxxVkWflNtd3TQLFqjXwd9dtUkwIAA/exec";
+
+    // Agregar campos de acompañantes dinámicamente
+    document.getElementById("addAcomp").addEventListener("click", function() {
+      const div = document.createElement("div");
+      div.innerHTML = `<input type="text" name="AcompananteNombre[]" placeholder="Nombre del acompañante">`;
+      document.getElementById("acompanantes").appendChild(div);
+    });
+
+    // Envío del formulario
     document.getElementById("formRSVP").addEventListener("submit", function(event) {
       event.preventDefault();
       const form = event.target;
       const data = new FormData(form);
 
-      fetch("https://script.google.com/macros/s/AKfycbzd1l34XwkisHZ8J3dmmW6u5YSs2FJUm1uWW1Y7DxxVkWflNtd3TQLFqjXwd9dtUkwIAA/exec", {
+      fetch(scriptURL, {
         method: "POST",
         body: data
       })
       .then(res => res.text())
       .then(text => {
-        document.getElementById("respuesta").style.display = "block";
-        document.getElementById("respuesta").style.color = "green";
-        document.getElementById("respuesta").textContent = "🎉 ¡Gracias! Tu confirmación fue registrada.";
+        mostrarConfeti();
+        const respuesta = document.getElementById("respuesta");
+        respuesta.style.display = "block";
+        respuesta.style.color = "#b71c1c";
+        respuesta.textContent = "💖 ¡Gracias por confirmar! Tu presencia hará que este día sea aún más especial para Mairim. 🌹";
         form.reset();
       })
       .catch(err => {
-        document.getElementById("respuesta").style.display = "block";
-        document.getElementById("respuesta").style.color = "red";
-        document.getElementById("respuesta").textContent = "❌ Ocurrió un error. Intenta nuevamente.";
+        const respuesta = document.getElementById("respuesta");
+        respuesta.style.display = "block";
+        respuesta.style.color = "red";
+        respuesta.textContent = "❌ Ocurrió un error. Intenta nuevamente.";
       });
     });
+
+    // Confeti con pétalos rojos 🌹
+    function mostrarConfeti() {
+      for (let i = 0; i < 40; i++) {
+        const petalo = document.createElement("div");
+        petalo.classList.add("confetti");
+        petalo.style.left = Math.random() * 100 + "vw";
+        petalo.style.background = `hsl(${Math.random() * 20 + 350}, 80%, 50%)`;
+        petalo.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(petalo);
+        setTimeout(() => petalo.remove(), 3000);
+      }
+    }
   </script>
 </body>
 </html>
