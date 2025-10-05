@@ -1,311 +1,309 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>XV Años de Mairim Bermudes García</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      background: #fff5f5;
-      color: #400000;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XV Años de Mairim Bermudes García</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    background: #fff5f5;
+    color: #400000;
+    padding: 0;
+  }
 
-    header {
-      background: linear-gradient(135deg, #ffbaba, #ffe5e5, #ffd6d6);
-      text-align: center;
-      padding: 3rem 1rem;
-      border-bottom: 3px solid #ff8080;
-    }
+  header {
+    background: linear-gradient(135deg, #ffbaba, #ffe5e5, #ffd6d6);
+    text-align: center;
+    padding: 2rem 1rem;
+    border-bottom: 2px solid #ff8080;
+  }
 
-    header h1 {
-      font-size: 2.5rem;
-      color: #800000;
-      margin: 0;
-    }
+  header h1 {
+    font-size: 2rem;
+    color: #800000;
+    margin: 0;
+  }
 
-    header h2 {
-      font-weight: 400;
-      color: #a83232;
-      margin-top: 0.5rem;
-    }
+  header h2 {
+    font-weight: 400;
+    color: #a83232;
+    margin-top: 0.5rem;
+  }
 
-    main {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: #ffffff;
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(200, 0, 0, 0.1);
-    }
+  header p {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
 
-    label {
-      display: block;
-      margin-top: 1rem;
-      color: #660000;
-      font-weight: 500;
-    }
+  main {
+    max-width: 95%;
+    margin: 1rem auto;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(200, 0, 0, 0.1);
+  }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid #ffb3b3;
-      border-radius: 8px;
-      margin-top: 0.3rem;
-      font-size: 1rem;
-    }
+  label {
+    display: block;
+    margin-top: 1rem;
+    color: #660000;
+    font-weight: 500;
+  }
 
-    button {
-      margin-top: 1rem;
-      background-color: #b30000;
-      color: white;
-      border: none;
-      padding: 0.8rem 1.2rem;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s;
-    }
+  input, select, textarea, button {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-top: 0.3rem;
+    font-size: 1rem;
+    border: 1px solid #ffb3b3;
+  }
 
-    button:hover {
-      background-color: #800000;
-    }
+  button {
+    background-color: #b30000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-    #acompananteWrapper {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 5px;
-    }
+  button:hover {
+    background-color: #800000;
+  }
 
-    #etiquetasAcompanantes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 5px;
-    }
+  #acompananteWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
 
-    .etiqueta {
-      background-color: #ffb3b3;
-      color: #660000;
-      padding: 5px 10px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      font-size: 0.9rem;
-    }
+  #acompananteWrapper input {
+    flex: 1 1 auto;
+  }
 
-    .etiqueta span {
-      margin-left: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  #etiquetasAcompanantes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
 
-    #gracias {
-      text-align: center;
-      font-size: 1.3rem;
-      color: #b30000;
-      margin-top: 2rem;
-      display: none;
-    }
+  .etiqueta {
+    background-color: #ffb3b3;
+    color: #660000;
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+  }
 
-    @keyframes caer {
-      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
+  .etiqueta span {
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
 
-    .confeti {
-      position: fixed;
-      font-size: 16px;
-      top: 0;
-      pointer-events: none;
-      animation: caer linear forwards;
-    }
+  #gracias {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #b30000;
+    margin-top: 1.5rem;
+    display: none;
+  }
 
-    #contador {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      display: none;
-    }
+  .confeti {
+    position: fixed;
+    font-size: 14px;
+    top: 0;
+    pointer-events: none;
+    animation: caer linear forwards;
+  }
 
-    #claveAdminWrapper {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+  @keyframes caer {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
 
-    #claveAdminWrapper input {
-      width: auto;
-      display: inline-block;
-      margin-right: 5px;
-    }
-  </style>
+  #contador, #claveAdminWrapper {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  #claveAdminWrapper input {
+    width: 60%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>XV.7 Años de Mairim Bermudes García</h1>
-    <h2>23 de Noviembre de 2025</h2>
-    <p>Con gran alegría, te invitamos a celebrar este día tan especial lleno de amor, sueños y gratitud.</p>
-  </header>
 
-  <main>
-    <h3>Confirma tu asistencia</h3>
+<header>
+  <h1>XV Años de Mairim Bermudes García</h1>
+  <h2>23 de Noviembre de 2025</h2>
+  <p>Con gran alegría, te invitamos a celebrar este día tan especial lleno de amor, sueños y gratitud.</p>
+</header>
 
-    <!-- Acceso para ver contador privado -->
-    <div id="claveAdminWrapper">
-      <input type="password" id="claveAdmin" placeholder="Clave para ver contador">
-      <button type="button" id="verContadorBtn">Ver contador</button>
+<main>
+  <h3>Confirma tu asistencia</h3>
+
+  <!-- Acceso contador privado -->
+  <div id="claveAdminWrapper">
+    <input type="password" id="claveAdmin" placeholder="Clave para ver contador">
+    <button type="button" id="verContadorBtn">Ver contador</button>
+  </div>
+
+  <div id="contador">Total de personas confirmadas: 0</div>
+
+  <form id="invitacionForm">
+    <label>Nombre:</label>
+    <input type="text" name="Nombre" required>
+
+    <label>Familia:</label>
+    <input type="text" name="Familia" required>
+
+    <label>Correo:</label>
+    <input type="email" name="Correo">
+
+    <label>Teléfono:</label>
+    <input type="tel" name="Telefono">
+
+    <label>¿Asistirá?:</label>
+    <select name="Asiste">
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select>
+
+    <label>Acompañantes:</label>
+    <div id="acompananteWrapper">
+      <input type="text" id="nuevoAcompanante" placeholder="Nombre del acompañante">
+      <button type="button" id="agregarAcompananteBtn">+ Agregar</button>
     </div>
+    <div id="etiquetasAcompanantes"></div>
+    <input type="hidden" name="Acompanantes" id="acompanantes">
 
-    <div id="contador">Total de personas confirmadas: 0</div>
+    <label>Mensaje:</label>
+    <textarea name="Mensaje" rows="3"></textarea>
 
-    <form id="invitacionForm">
-      <label>Nombre:</label>
-      <input type="text" name="Nombre" required>
+    <button type="submit">Confirmar asistencia</button>
+  </form>
 
-      <label>Familia:</label>
-      <input type="text" name="Familia" required>
+  <div id="gracias">💐 ¡Gracias por confirmar! Tu asistencia ha sido registrada con mucho cariño. 🌹</div>
+</main>
 
-      <label>Correo:</label>
-      <input type="email" name="Correo">
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbyrUH_OAqInlvMHOov6BkraNGDyhYD_A81OCPnYnq3xFWCR0qvdiNfEhn6dzBtwSIs-NA/exec"; // Pega tu Web App URL aquí
 
-      <label>Teléfono:</label>
-      <input type="tel" name="Telefono">
+// --------- Manejo de acompañantes ---------
+const agregarBtn = document.getElementById('agregarAcompananteBtn');
+const nuevoInput = document.getElementById('nuevoAcompanante');
+const acompanantesField = document.getElementById('acompanantes');
+const etiquetasContainer = document.getElementById('etiquetasAcompanantes');
+let acompanantesLista = [];
 
-      <label>¿Asistirá?:</label>
-      <select name="Asiste">
-        <option value="Sí">Sí</option>
-        <option value="No">No</option>
-      </select>
+agregarBtn.addEventListener('click', () => {
+  const nombre = nuevoInput.value.trim();
+  if(nombre){
+    acompanantesLista.push(nombre);
+    actualizarEtiquetas();
+    nuevoInput.value = '';
+    nuevoInput.focus();
+  }
+});
 
-      <label>Acompañantes:</label>
-      <div id="acompananteWrapper">
-        <input type="text" id="nuevoAcompanante" placeholder="Nombre del acompañante">
-        <button type="button" id="agregarAcompananteBtn">+ Agregar</button>
-      </div>
-      <div id="etiquetasAcompanantes"></div>
-      <input type="hidden" name="Acompanantes" id="acompanantes">
+function actualizarEtiquetas() {
+  etiquetasContainer.innerHTML = '';
+  acompanantesLista.forEach((nombre, index) => {
+    const div = document.createElement('div');
+    div.className = 'etiqueta';
+    div.textContent = nombre;
+    const span = document.createElement('span');
+    span.textContent = '×';
+    span.addEventListener('click', () => {
+      acompanantesLista.splice(index,1);
+      actualizarEtiquetas();
+    });
+    div.appendChild(span);
+    etiquetasContainer.appendChild(div);
+  });
+  acompanantesField.value = acompanantesLista.join(', ');
+}
 
-      <label>Mensaje:</label>
-      <textarea name="Mensaje" rows="3"></textarea>
-
-      <button type="submit">Confirmar asistencia</button>
-    </form>
-
-    <div id="gracias">💐 ¡Gracias por confirmar! Tu asistencia ha sido registrada con mucho cariño. 🌹</div>
-  </main>
-
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyrUH_OAqInlvMHOov6BkraNGDyhYD_A81OCPnYnq3xFWCR0qvdiNfEhn6dzBtwSIs-NA/exec"; // Pega tu Web App URL aquí
-
-    // ----------------- Manejo de acompañantes -----------------
-    const agregarBtn = document.getElementById('agregarAcompananteBtn');
-    const nuevoInput = document.getElementById('nuevoAcompanante');
-    const acompanantesField = document.getElementById('acompanantes');
-    const etiquetasContainer = document.getElementById('etiquetasAcompanantes');
-    let acompanantesLista = [];
-
-    agregarBtn.addEventListener('click', () => {
-      const nombre = nuevoInput.value.trim();
-      if(nombre){
-        acompanantesLista.push(nombre);
+// --------- Enviar formulario ---------
+document.getElementById('invitacionForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const formData = new FormData(this);
+  fetch(scriptURL, { method: "POST", body: formData })
+    .then(res => res.text())
+    .then(text => {
+      if(text.includes("OK")){
+        document.getElementById('gracias').style.display = 'block';
+        this.reset();
+        acompanantesLista = [];
         actualizarEtiquetas();
-        nuevoInput.value = '';
-        nuevoInput.focus();
-      }
-    });
-
-    function actualizarEtiquetas() {
-      etiquetasContainer.innerHTML = '';
-      acompanantesLista.forEach((nombre, index) => {
-        const div = document.createElement('div');
-        div.className = 'etiqueta';
-        div.textContent = nombre;
-        const span = document.createElement('span');
-        span.textContent = '×';
-        span.addEventListener('click', () => {
-          acompanantesLista.splice(index,1);
-          actualizarEtiquetas();
-        });
-        div.appendChild(span);
-        etiquetasContainer.appendChild(div);
-      });
-      acompanantesField.value = acompanantesLista.join(', ');
-    }
-
-    // ----------------- Enviar formulario -----------------
-    document.getElementById('invitacionForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-
-      fetch(scriptURL, { method: "POST", body: formData })
-        .then(res => res.text())
-        .then(text => {
-          if (text.includes("OK")) {
-            document.getElementById('gracias').style.display = 'block';
-            form.reset();
-            acompanantesLista = [];
-            actualizarEtiquetas();
-            lanzarConfeti();
-          } else {
-            alert("Hubo un problema al registrar tu asistencia. Intenta de nuevo.");
-          }
-        })
-        .catch(err => alert("Error al enviar el formulario: " + err));
-    });
-
-    // ----------------- Confeti -----------------
-    function lanzarConfeti() {
-      const confetiContainer = document.createElement("div");
-      confetiContainer.style.position = "fixed";
-      confetiContainer.style.top = 0;
-      confetiContainer.style.left = 0;
-      confetiContainer.style.width = "100%";
-      confetiContainer.style.height = "100%";
-      confetiContainer.style.pointerEvents = "none";
-      confetiContainer.style.overflow = "hidden";
-      document.body.appendChild(confetiContainer);
-
-      for (let i = 0; i < 50; i++) {
-        const confeti = document.createElement("div");
-        confeti.textContent = "🎉";
-        confeti.classList.add("confeti");
-        confeti.style.left = Math.random() * 100 + "%";
-        confeti.style.fontSize = (Math.random() * 20 + 16) + "px";
-        confeti.style.animationDuration = (Math.random() * 3 + 2) + "s";
-        confetiContainer.appendChild(confeti);
-      }
-
-      setTimeout(() => confetiContainer.remove(), 5000);
-    }
-
-    // ----------------- Contador privado -----------------
-    const verBtn = document.getElementById('verContadorBtn');
-    const claveInput = document.getElementById('claveAdmin');
-    const contadorDiv = document.getElementById('contador');
-    const endpointGet = scriptURL; // Solo el doGet devuelve total de registros
-
-    verBtn.addEventListener('click', () => {
-      const clave = claveInput.value.trim();
-      if(clave === "macl"){  // tu clave privada
-        contadorDiv.style.display = "block";
-        actualizarContador();
-        setInterval(actualizarContador, 10000);
+        lanzarConfeti();
       } else {
-        alert("Clave incorrecta");
+        alert("Hubo un problema al registrar tu asistencia. Intenta de nuevo.");
       }
-    });
+    })
+    .catch(err => alert("Error al enviar el formulario: "+err));
+});
 
-    function actualizarContador() {
-      fetch(endpointGet)
-        .then(res => res.json())
-        .then(data => {
-          contadorDiv.textContent = "Total de personas confirmadas: " + data.total;
-        })
-        .catch(err => console.log("Error al obtener contador:", err));
-    }
-  </script>
+// --------- Confeti ligero ---------
+function lanzarConfeti(){
+  const container = document.createElement("div");
+  container.style.position="fixed";
+  container.style.top=0;
+  container.style.left=0;
+  container.style.width="100%";
+  container.style.height="100%";
+  container.style.pointerEvents="none";
+  container.style.overflow="hidden";
+  document.body.appendChild(container);
+
+  for(let i=0;i<30;i++){ // menos confeti para móviles
+    const confeti = document.createElement("div");
+    confeti.textContent="🎉";
+    confeti.className="confeti";
+    confeti.style.left=Math.random()*100+"%";
+    confeti.style.fontSize=(Math.random()*14+12)+"px";
+    confeti.style.animationDuration=(Math.random()*2+2)+"s";
+    container.appendChild(confeti);
+  }
+
+  setTimeout(()=>container.remove(),4000);
+}
+
+// --------- Contador privado ---------
+const verBtn = document.getElementById('verContadorBtn');
+const claveInput = document.getElementById('claveAdmin');
+const contadorDiv = document.getElementById('contador');
+
+verBtn.addEventListener('click',()=>{
+  const clave = claveInput.value.trim();
+  if(clave==="macl"){
+    contadorDiv.style.display="block";
+    actualizarContador();
+    setInterval(actualizarContador,10000);
+  } else {
+    alert("Clave incorrecta");
+  }
+});
+
+function actualizarContador(){
+  fetch(scriptURL)
+    .then(res=>res.json())
+    .then(data=>{
+      contadorDiv.textContent="Total de personas confirmadas: "+data.total;
+    })
+    .catch(err=>console.log("Error al obtener contador:",err));
+}
+</script>
 </body>
 </html>
 
