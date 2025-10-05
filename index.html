@@ -171,7 +171,7 @@
         formData.append(input.name, input.value);
       });
 
-      // Todos los acompañantes
+      // Todos los acompañantes dinámicos
       form.querySelectorAll('input[name="AcompananteNombre[]"]').forEach(input => {
         formData.append('AcompananteNombre[]', input.value);
       });
