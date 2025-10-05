@@ -1,108 +1,168 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>15 Años — Mairim Bermudes García</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación de Fiesta</title>
+
   <style>
-    body{font-family:'Segoe UI',sans-serif;background:#fff6f6;margin:0;color:#3b2b2b}
-    header{background:url('https://images.unsplash.com/photo-1520975916718-2b9b6b3e8f1d?auto=format&fit=crop&w=1400&q=60')center/cover;padding:60px 20px;text-align:center;color:white}
-    header .inner{background:rgba(0,0,0,0.3);padding:20px;border-radius:10px;display:inline-block}
-    h1{margin:0;font-size:40px}
-    main{max-width:800px;margin:-30px auto 60px;padding:20px}
-    .card{background:#ffffffcc;padding:20px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);margin-bottom:20px}
-    label{display:block;margin:10px 0 4px;font-weight:600}
-    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-bottom:10px}
-    .btn{background:#b80000;color:white;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
-    .btn-ghost{background:transparent;border:2px solid #b80000;color:#b80000;border-radius:8px;padding:8px 12px;cursor:pointer}
-    .companion-row{display:flex;gap:8px;margin-bottom:8px}
-    footer{text-align:center;color:#666;padding:20px}
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #ffe0f0, #fff);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      color: #444;
+    }
+
+    header {
+      background: url('https://i.imgur.com/WoKx0iV.jpg') center/cover;
+      color: white;
+      padding: 80px 20px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+
+    header h1 {
+      font-size: 3em;
+      margin: 0;
+    }
+
+    header h2 {
+      font-weight: 400;
+      margin: 10px 0 0 0;
+      font-size: 1.5em;
+    }
+
+    section {
+      padding: 30px 15px;
+    }
+
+    #confirmacion form {
+      display: inline-block;
+      background: white;
+      text-align: left;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    #confirmacion input,
+    #confirmacion select,
+    #confirmacion textarea {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    #confirmacion button {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    #confirmacion button:hover {
+      background: #c2185b;
+    }
+
+    #respuesta {
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+      display: none;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+    }
   </style>
 </head>
+
 <body>
   <header>
-    <div class="inner">
-      <h1>Mairim Bermudes García</h1>
-      <p>Quince años — 23 de noviembre de 2025</p>
-      <p>Colonia Arcoiris</p>
-    </div>
+    <h1>🎀 Fiesta de Quince Años 🎀</h1>
+    <h2><strong><!-- Cambia aquí el nombre de la festejada --></strong> Sofía Martínez</h2>
+    <p>📅 15 de noviembre de 2025 • 🕖 7:00 PM</p>
+    <p>📍 Salón Real del Valle, Ensenada B.C.</p>
   </header>
 
-  <main>
-    <div class="card">
-      <h2>Confirma tu asistencia</h2>
-      <form id="rsvpForm" method="POST" action="https://formsubmit.co/miguel.carrillol@gmail.com">
-        <input type="hidden" name="_subject" value="RSVP - 15 años de Mairim" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_autoresponse" value="Gracias por confirmar tu asistencia. Te esperamos el 23 de noviembre en Colonia Arcoiris." />
+  <section>
+    <h2>¡Estás invitado a celebrar conmigo!</h2>
+    <p>Confirma tu asistencia llenando el siguiente formulario:</p>
 
-        <label for="familia">Nombre de la familia</label>
-        <input id="familia" name="Familia" type="text" required placeholder="Ej. Familia García López" />
+    <div id="confirmacion">
+      <form id="formRSVP">
+        <label>Nombre:</label>
+        <input type="text" name="Nombre" placeholder="Tu nombre" required>
 
-        <label for="nombre">Nombre completo del invitado principal</label>
-        <input id="nombre" name="Nombre" type="text" required placeholder="Ej. Ana Pérez" />
+        <label>Familia:</label>
+        <input type="text" name="Familia" placeholder="Apellido o familia (opcional)">
 
-        <label for="correo">Correo electrónico</label>
-        <input id="correo" name="Correo" type="email" required placeholder="ejemplo@correo.com" />
+        <label>Correo:</label>
+        <input type="email" name="Correo" placeholder="Correo electrónico">
 
-        <label for="telefono">Teléfono (opcional)</label>
-        <input id="telefono" name="Telefono" type="tel" placeholder="(636) 123-4567" />
+        <label>Teléfono:</label>
+        <input type="tel" name="Telefono" placeholder="Teléfono">
 
-        <label for="asiste">¿Asistirá?</label>
-        <select id="asiste" name="Asiste" required>
-          <option value="Sí">Sí</option>
-          <option value="No">No</option>
-          <option value="Tal vez">Tal vez</option>
+        <label>¿Asistirás?</label>
+        <select name="Asiste" required>
+          <option value="">Selecciona una opción</option>
+          <option value="Sí">Sí, asistiré</option>
+          <option value="No">No podré ir</option>
         </select>
 
-        <label>Acompañantes</label>
-        <div id="companions"></div>
-        <button type="button" id="addCompanion" class="btn-ghost">+ Agregar acompañante</button>
+        <label>Acompañantes (opcional)</label>
+        <input type="text" name="AcompananteNombre[]" placeholder="Acompañante 1">
+        <input type="text" name="AcompananteNombre[]" placeholder="Acompañante 2">
 
-        <label for="mensaje">Mensaje (opcional)</label>
-        <textarea id="mensaje" name="Mensaje" rows="3" placeholder="Ej. Llegaremos después de misa..." ></textarea>
+        <label>Mensaje:</label>
+        <textarea name="Mensaje" rows="3" placeholder="Escribe un mensaje para la festejada..."></textarea>
 
-        <button type="submit" class="btn">Enviar confirmación</button>
+        <button type="submit">Enviar confirmación</button>
       </form>
+
+      <p id="respuesta">🎉 ¡Gracias! Tu confirmación fue registrada.</p>
     </div>
-  </main>
+  </section>
 
   <footer>
-    <small>Invitación a los 15 años de Mairim Bermudes García · 23 de noviembre de 2025 · Colonia Arcoiris</small>
+    <p>Con cariño de la familia Martínez 💕</p>
   </footer>
 
   <script>
-    const GOOGLE_SHEETS_WEBHOOK = "https://script.google.com/macros/s/AKfycbzd1l34XwkisHZ8J3dmmW6u5YSs2FJUm1uWW1Y7DxxVkWflNtd3TQLFqjXwd9dtUkwIAA/exec"; // Pega aquí la URL de tu Web App de Google Sheets
+    document.getElementById("formRSVP").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const form = event.target;
+      const data = new FormData(form);
 
-    const companionsEl = document.getElementById('companions');
-    const addBtn = document.getElementById('addCompanion');
-    function addCompanion(name=''){
-      const row=document.createElement('div');
-      row.className='companion-row';
-      row.innerHTML=`<input name="AcompananteNombre[]" type="text" placeholder="Nombre del acompañante" value="${name}" /> <button type="button" class="btn-ghost remove">Eliminar</button>`;
-      companionsEl.appendChild(row);
-      row.querySelector('.remove').addEventListener('click',()=>row.remove());
-    }
-    addBtn.addEventListener('click',()=>addCompanion());
-
-    document.getElementById('rsvpForm').addEventListener('submit',async function(e){
-      if(!GOOGLE_SHEETS_WEBHOOK)return;
-      e.preventDefault();
-      const form=e.target;
-      const data=new FormData(form);
-      const obj={};
-      for(const [k,v] of data.entries()){
-        if(k.endsWith('[]')){
-          const key=k.replace('[]','');
-          obj[key]=obj[key]||[];
-          obj[key].push(v);
-        }else obj[k]=v;
-      }
-      obj['FechaEnvio']=new Date().toISOString();
-      try{
-        await fetch(GOOGLE_SHEETS_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)});
-      }catch(err){console.warn('Error al enviar a Sheets',err);}
-      form.submit();
+      fetch("https://script.google.com/macros/s/AKfycbzd1l34XwkisHZ8J3dmmW6u5YSs2FJUm1uWW1Y7DxxVkWflNtd3TQLFqjXwd9dtUkwIAA/exec", {
+        method: "POST",
+        body: data
+      })
+      .then(res => res.text())
+      .then(text => {
+        document.getElementById("respuesta").style.display = "block";
+        document.getElementById("respuesta").style.color = "green";
+        document.getElementById("respuesta").textContent = "🎉 ¡Gracias! Tu confirmación fue registrada.";
+        form.reset();
+      })
+      .catch(err => {
+        document.getElementById("respuesta").style.display = "block";
+        document.getElementById("respuesta").style.color = "red";
+        document.getElementById("respuesta").textContent = "❌ Ocurrió un error. Intenta nuevamente.";
+      });
     });
   </script>
 </body>
