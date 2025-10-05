@@ -1,264 +1,109 @@
-<!--
-  Invitación para los 15 años de Mairim Bermudes García
-  - Lista para subir a GitHub Pages (archivo único: index.html)
-  - Tema: rojos florales
-  - Fecha: 23 de noviembre 2025
-  - Lugar: Colonia Arcoiris
-  - Confirmaciones enviadas por email a: miguel.carrillol@gmail.com
-
-  INSTRUCCIONES RÁPIDAS:
-  1) Subir este archivo como `index.html` a un repositorio y activar GitHub Pages.
-  2) Esta página envía el formulario a FormSubmit (https://formsubmit.co).
-     - Por defecto está configurado para enviar a miguel.carrillol@gmail.com.
-     - La primera vez que alguien envíe el formulario deberás confirmar tu email (FormSubmit te mandará un link).
-  3) OPCIONAL: Si quieres que los RSVPs se guarden automáticamente en Google Sheets,
-     sigue las instrucciones que puse abajo y despliega un Web App de Google Apps Script.
-     Luego copia la URL del web app y reemplaza la variable `GOOGLE_SHEETS_WEBHOOK` en el archivo.
-
-  He incluido también un ejemplo de Google Apps Script (más abajo en este archivo en un comentario)
-  que recibe POSTs y los guarda en una hoja de cálculo.
-
-  Nota técnica:
-  - El formulario envía por defecto a FormSubmit y además intenta enviar (fetch) los datos a
-    GOOGLE_SHEETS_WEBHOOK si lo configuras (para guardar en una hoja de cálculo).
-  - También incluye funcionalidad en la propia página para agregar/eliminar acompañantes.
--->
-
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>15 Años — Mairim Bermudes García</title>
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   <style>
-    /* Estilos: rojos florales */
-    :root{
-      --bg:#fff6f6;
-      --accent:#b80000;
-      --accent-2:#e43b3b;
-      --text:#3b2b2b;
-      --card:#ffffffcc;
-      --rose-1: linear-gradient(135deg,#fff0f0 0%, #ffecec 100%);
-    }
-    *{box-sizing:border-box}
-    body{font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:var(--text);}
-    header{background: url('https://images.unsplash.com/photo-1520975916718-2b9b6b3e8f1d?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat, var(--rose-1); padding:60px 20px; text-align:center; color:white}
-    header .inner{max-width:900px;margin:0 auto;background:rgba(0,0,0,0.2);padding:24px;border-radius:16px}
-    h1{font-size:40px;margin:0 0 8px;letter-spacing:1px}
-    p.lead{margin:0;font-size:18px;opacity:0.95}
-    main{max-width:980px;margin:-40px auto 80px;padding:20px}
-    .card{background:var(--card);border-radius:12px;padding:22px;box-shadow:0 6px 24px rgba(0,0,0,0.08);margin-bottom:18px}
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
-    @media(max-width:880px){.grid{grid-template-columns:1fr} header{padding:40px} h1{font-size:32px}}
-    .event-details{font-size:16px}
-    .muted{color:#5a4b4b}
-
-    form label{display:block;margin-bottom:8px;font-weight:600}
-    input[type=text], input[type=email], input[type=tel], textarea, select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6dede;margin-bottom:12px}
-    .btn{display:inline-block;padding:10px 16px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:700;cursor:pointer}
-    .btn-ghost{background:transparent;border:2px solid var(--accent);color:var(--accent)}
-
-    .companions{margin-bottom:12px}
+    body{font-family:'Segoe UI',sans-serif;background:#fff6f6;margin:0;color:#3b2b2b}
+    header{background:url('https://images.unsplash.com/photo-1520975916718-2b9b6b3e8f1d?auto=format&fit=crop&w=1400&q=60')center/cover;padding:60px 20px;text-align:center;color:white}
+    header .inner{background:rgba(0,0,0,0.3);padding:20px;border-radius:10px;display:inline-block}
+    h1{margin:0;font-size:40px}
+    main{max-width:800px;margin:-30px auto 60px;padding:20px}
+    .card{background:#ffffffcc;padding:20px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);margin-bottom:20px}
+    label{display:block;margin:10px 0 4px;font-weight:600}
+    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-bottom:10px}
+    .btn{background:#b80000;color:white;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
+    .btn-ghost{background:transparent;border:2px solid #b80000;color:#b80000;border-radius:8px;padding:8px 12px;cursor:pointer}
     .companion-row{display:flex;gap:8px;margin-bottom:8px}
-    .companion-row input{flex:1}
-    .small{font-size:13px;color:#6b5858}
-
-    footer{max-width:980px;margin:0 auto 60px;padding:20px;text-align:center;color:#6b5858}
-
-    /* Floral accents */
-    .floral{position:absolute;right:12px;top:12px;opacity:0.9;pointer-events:none}
+    footer{text-align:center;color:#666;padding:20px}
   </style>
 </head>
 <body>
   <header>
     <div class="inner">
       <h1>Mairim Bermudes García</h1>
-      <p class="lead">Quince años — Acompáñanos a celebrar</p>
-      <p class="lead" style="margin-top:12px;font-weight:600">23 de noviembre de 2025 · Colonia Arcoiris</p>
+      <p>Quince años — 23 de noviembre de 2025</p>
+      <p>Colonia Arcoiris</p>
     </div>
   </header>
 
   <main>
-    <div class="grid">
-      <section>
-        <div class="card event-details">
-          <h2>Detalles del evento</h2>
-          <p class="muted">Fecha y hora: <strong>23 de noviembre de 2025</strong></p>
-          <p class="muted">Lugar: <strong>Colonia Arcoiris</strong></p>
-          <p class="muted">Tema: <strong>Rojos florales</strong></p>
-          <hr />
-          <p>Será una tarde-noche especial para celebrar los 15 años de Mairim. Agradecemos confirmar asistencia a la brevedad para poder organizar espacios y catering.</p>
-        </div>
+    <div class="card">
+      <h2>Confirma tu asistencia</h2>
+      <form id="rsvpForm" method="POST" action="https://formsubmit.co/miguel.carrillol@gmail.com">
+        <input type="hidden" name="_subject" value="RSVP - 15 años de Mairim" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_autoresponse" value="Gracias por confirmar tu asistencia. Te esperamos el 23 de noviembre en Colonia Arcoiris." />
 
-        <div class="card">
-          <h2>Confirmar asistencia</h2>
-          <form id="rsvpForm" method="POST" action="https://formsubmit.co/miguel.carrillol@gmail.com">
-            <!-- FormSubmit: revisa tu correo la primera vez para activar -->
-            <input type="hidden" name="_subject" value="RSVP - 15 años de Mairim" />
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_autoresponse" value="Gracias por confirmar. Te esperamos el 23 de noviembre de 2025 en Colonia Arcoiris." />
+        <label for="familia">Nombre de la familia</label>
+        <input id="familia" name="Familia" type="text" required placeholder="Ej. Familia García López" />
 
-            <label for="name">Nombre completo</label>
-            <input id="name" name="Nombre" type="text" required placeholder="Ej. Ana Pérez" />
+        <label for="nombre">Nombre completo del invitado principal</label>
+        <input id="nombre" name="Nombre" type="text" required placeholder="Ej. Ana Pérez" />
 
-            <label for="email">Correo electrónico</label>
-            <input id="email" name="Correo" type="email" required placeholder="ejemplo@correo.com" />
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" name="Correo" type="email" required placeholder="ejemplo@correo.com" />
 
-            <label for="phone">Teléfono (opcional)</label>
-            <input id="phone" name="Telefono" type="tel" placeholder="(618) 123-4567" />
+        <label for="telefono">Teléfono (opcional)</label>
+        <input id="telefono" name="Telefono" type="tel" placeholder="(636) 123-4567" />
 
-            <label for="attending">¿Asistirá?</label>
-            <select id="attending" name="Asiste" required>
-              <option value="Sí">Sí</option>
-              <option value="No">No</option>
-              <option value="Tal vez">Tal vez</option>
-            </select>
+        <label for="asiste">¿Asistirá?</label>
+        <select id="asiste" name="Asiste" required>
+          <option value="Sí">Sí</option>
+          <option value="No">No</option>
+          <option value="Tal vez">Tal vez</option>
+        </select>
 
-            <label> Acompañantes (puedes agregar nombres)</label>
-            <div id="companions" class="companions">
-              <!-- companion rows inserted here -->
-            </div>
-            <button type="button" id="addCompanion" class="btn-ghost">+ Agregar acompañante</button>
+        <label>Acompañantes</label>
+        <div id="companions"></div>
+        <button type="button" id="addCompanion" class="btn-ghost">+ Agregar acompañante</button>
 
-            <label for="message">Mensaje (opcional)</label>
-            <textarea id="message" name="Mensaje" rows="3" placeholder="Ej. Requerimos silla para adulto mayor..."></textarea>
+        <label for="mensaje">Mensaje (opcional)</label>
+        <textarea id="mensaje" name="Mensaje" rows="3" placeholder="Ej. Llegaremos después de misa..." ></textarea>
 
-            <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
-              <button class="btn" type="submit">Enviar confirmación</button>
-              <button type="button" id="downloadSample" class="btn-ghost">Descargar CSV ejemplo</button>
-            </div>
-
-            <p class="small" style="margin-top:12px">Las confirmaciones se enviarán a <strong>miguel.carrillol@gmail.com</strong>. Si prefieres guardarlas en una hoja de cálculo automáticamente, despliega el WebApp de Google Sheets y pega la URL en `GOOGLE_SHEETS_WEBHOOK` dentro del archivo.</p>
-          </form>
-        </div>
-
-      </section>
-
-      <aside>
-        <div class="card" style="position:relative;overflow:hidden">
-          <h3>Información</h3>
-          <p class="small"><strong>Dirección:</strong> Colonia Arcoiris</p>
-          <p class="small"><strong>Hora:</strong> Por definir (agrega hora si lo deseas)</p>
-          <hr />
-          <p class="small">Si tienes dudas o prefieres confirmar por WhatsApp, puedes escribir al organizador.</p>
-          <p style="margin-top:12px"><a href="https://wa.me/5216361838334?text=Hola,%20confirmaci%C3%B3n%20para%20Mairim" target="_blank" class="btn">Confirmar por WhatsApp</a></p>
-        </div>
-
-        <div class="card">
-          <h3>Contacto</h3>
-          <p class="small">Miguel Carrillo<br />Correo: miguel.carrillol@gmail.com</p>
-        </div>
-      </aside>
+        <button type="submit" class="btn">Enviar confirmación</button>
+      </form>
     </div>
   </main>
 
   <footer>
-    <small>Diseño: Invitación 15 | Mairim Bermudes García — 23 de noviembre de 2025</small>
+    <small>Invitación a los 15 años de Mairim Bermudes García · 23 de noviembre de 2025 · Colonia Arcoiris</small>
   </footer>
 
   <script>
-    // CONFIG: Si quieres guardar también los RSVP en Google Sheets, despliega un Web App de Google Apps Script
-    // y pega la URL aquí. Si no, deja en blanco. (Ver ejemplo más abajo en comentarios.)
-    const GOOGLE_SHEETS_WEBHOOK = ""; // ejemplo: "https://script.google.com/macros/s/AKfycbx.../exec"
+    const GOOGLE_SHEETS_WEBHOOK = ""; // Pega aquí la URL de tu Web App de Google Sheets
 
-    // Manejo de acompañantes dinámicos
     const companionsEl = document.getElementById('companions');
     const addBtn = document.getElementById('addCompanion');
     function addCompanion(name=''){
-      const row = document.createElement('div');
-      row.className = 'companion-row';
-      row.innerHTML = `<input name="AcompananteNombre[]" type="text" placeholder="Nombre del acompañante" value="${name}" /> <button type="button" class="btn-ghost remove">Eliminar</button>`;
+      const row=document.createElement('div');
+      row.className='companion-row';
+      row.innerHTML=`<input name="AcompananteNombre[]" type="text" placeholder="Nombre del acompañante" value="${name}" /> <button type="button" class="btn-ghost remove">Eliminar</button>`;
       companionsEl.appendChild(row);
-      row.querySelector('.remove').addEventListener('click', ()=> row.remove());
+      row.querySelector('.remove').addEventListener('click',()=>row.remove());
     }
-    addBtn.addEventListener('click', ()=> addCompanion());
+    addBtn.addEventListener('click',()=>addCompanion());
 
-    // Añadir 1 campo por defecto
-    addCompanion();
-
-    // Descargar CSV de ejemplo para ver el formato
-    document.getElementById('downloadSample').addEventListener('click', ()=>{
-      const headers = ['Fecha','Nombre','Correo','Telefono','Asiste','Acompañantes','Mensaje'];
-      const sample = [new Date().toLocaleString(),'Ejemplo Nombre','ejemplo@correo.com','6361234567','Sí','Juan Pérez;María López','Llegaré puntual'];
-      const csv = headers.join(',') + '\n' + sample.map(f=>`"${String(f).replace(/\"/g,'\"\"')}"`).join(',');
-      const blob = new Blob([csv],{type:'text/csv'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download='rsvp-ejemplo.csv'; a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    // Interceptar el envío para también mandar a Google Sheets webhook si está definido
-    document.getElementById('rsvpForm').addEventListener('submit', async function(e){
-      // dejar que el form haga su POST a FormSubmit tambien
-      // pero también enviaremos (fetch) un POST JSON al webhook si se configuró.
-      if(!GOOGLE_SHEETS_WEBHOOK) return; // nada que hacer
+    document.getElementById('rsvpForm').addEventListener('submit',async function(e){
+      if(!GOOGLE_SHEETS_WEBHOOK)return;
       e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
-      // construir objeto legible
-      const obj = {};
+      const form=e.target;
+      const data=new FormData(form);
+      const obj={};
       for(const [k,v] of data.entries()){
         if(k.endsWith('[]')){
-          const key = k.replace('[]','');
-          obj[key] = obj[key] || [];
+          const key=k.replace('[]','');
+          obj[key]=obj[key]||[];
           obj[key].push(v);
-        } else {
-          // manejar campos repetidos AcompananteNombre[] (nótese que name en el HTML es AcompananteNombre[])
-          if(k in obj){
-            if(Array.isArray(obj[k])) obj[k].push(v); else obj[k] = [obj[k], v];
-          } else obj[k] = v;
-        }
+        }else obj[k]=v;
       }
-      // extraer acompañantes desde los inputs con name AcompananteNombre[]
-      const companionInputs = document.querySelectorAll('input[name="AcompananteNombre[]"]');
-      const companions = [];
-      companionInputs.forEach(i=>{ if(i.value && i.value.trim()) companions.push(i.value.trim()); });
-      obj['Acompanantes'] = companions;
-      obj['FechaEnvio'] = new Date().toISOString();
-
+      obj['FechaEnvio']=new Date().toISOString();
       try{
-        const resp = await fetch(GOOGLE_SHEETS_WEBHOOK, {
-          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(obj)
-        });
-        if(!resp.ok) console.warn('Google Sheets webhook respondió con estado', resp.status);
-      }catch(err){
-        console.warn('No se pudo enviar al webhook de Google Sheets:', err);
-      }
-
-      // finalmente hacer submit normal (esto enviará a FormSubmit y redirigirá según configuración)
+        await fetch(GOOGLE_SHEETS_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)});
+      }catch(err){console.warn('Error al enviar a Sheets',err);}
       form.submit();
     });
   </script>
-
-<!--
-  EJEMPLO de Google Apps Script (pegar en editor de script de Google Sheets y desplegar como Web App):
-
-  function doPost(e){
-    // Espera recibir JSON con campos como Nombre, Correo, Telefono, Asiste, Acompanantes (array), Mensaje, FechaEnvio
-    try{
-      var ss = SpreadsheetApp.openById('TU_SHEET_ID_AQUI'); // id de la hoja
-      var sheet = ss.getSheetByName('Respuestas') || ss.insertSheet('Respuestas');
-      var data = JSON.parse(e.postData.contents);
-      var row = [new Date(), data.Nombre || '', data.Correo || '', data.Telefono || '', data.Asiste || '', (data.Acompanantes || []).join('; '), data.Mensaje || '', data.FechaEnvio || ''];
-      sheet.appendRow(row);
-      return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
-    }catch(err){
-      return ContentService.createTextOutput(JSON.stringify({status:'error', message:err.message})).setMimeType(ContentService.MimeType.JSON);
-    }
-  }
-
-  PASOS RÁPIDOS para usar el Apps Script:
-  1) Crear una hoja de cálculo en Google Sheets y copiar el ID (parte de la URL).
-  2) En el menú Extensiones > Apps Script, pega el código anterior y reemplaza TU_SHEET_ID_AQUI.
-  3) En "Desplegar" > "Implementar como aplicación web" elige:
-     - Ejecutar la app como: "Me" (tu cuenta)
-     - ¿Quién tiene acceso?: "Cualquiera, incluso anónimo" (o "Cualquiera" según opciones)
-  4) Copia la URL del Web App y pégala en la variable `GOOGLE_SHEETS_WEBHOOK` en este archivo.
-  5) Guardar. A partir de ese momento cada envío será también POSTeado a la hoja.
-
-  Seguridad: Si eliges permitir "Cualquiera, incluso anónimo" ten en cuenta que cualquiera con la URL podrá enviar datos.
--->
-
 </body>
 </html>
