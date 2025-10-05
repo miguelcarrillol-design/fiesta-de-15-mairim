@@ -143,7 +143,7 @@
 </head>
 <body>
   <header>
-    <h1>XV.3 Años de Mairim Bermudes García</h1>
+    <h1>XV Años de Mairim Bermudes García</h1>
     <h2>23 de Noviembre de 2025</h2>
     <p>Con gran alegría, te invitamos a celebrar este día tan especial lleno de amor, sueños y gratitud.</p>
   </header>
@@ -196,7 +196,7 @@
   </main>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/library/d/1SxPV4Cf-RbYl7A4F7pcSnEn_pwvuaKktTzBXnPnPwfYcKRrx7EUiKSjo/5";
+    const scriptURL = "TU_URL_DE_SCRIPT"; // Pega tu Web App URL aquí
 
     // ----------------- Manejo de acompañantes -----------------
     const agregarBtn = document.getElementById('agregarAcompananteBtn');
@@ -255,7 +255,7 @@
         .catch(err => alert("Error al enviar el formulario: " + err));
     });
 
-    // ----------------- Confeti en lluvia -----------------
+    // ----------------- Confeti -----------------
     function lanzarConfeti() {
       const confetiContainer = document.createElement("div");
       confetiContainer.style.position = "fixed";
@@ -284,7 +284,7 @@
     const verBtn = document.getElementById('verContadorBtn');
     const claveInput = document.getElementById('claveAdmin');
     const contadorDiv = document.getElementById('contador');
-    const endpointGet = scriptURL;
+    const endpointGet = scriptURL; // Solo el doGet devuelve total de registros
 
     verBtn.addEventListener('click', () => {
       const clave = claveInput.value.trim();
@@ -301,11 +301,11 @@
       fetch(endpointGet)
         .then(res => res.json())
         .then(data => {
-          contadorDiv.textContent = 
-            "Total de personas confirmadas: " + data.total + " (Incluye familias y acompañantes)";
+          contadorDiv.textContent = "Total de personas confirmadas: " + data.total;
         })
         .catch(err => console.log("Error al obtener contador:", err));
     }
   </script>
 </body>
 </html>
+
