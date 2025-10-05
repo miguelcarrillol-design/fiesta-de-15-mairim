@@ -72,13 +72,13 @@
       background-color: #800000;
     }
 
-    #acompanantes div {
+    #acompanantesContainer div {
       display: flex;
       align-items: center;
       margin-top: 0.5rem;
     }
 
-    #acompanantes input {
+    #acompanantesContainer input {
       flex: 1;
       margin-right: 0.5rem;
     }
@@ -126,8 +126,8 @@
       </select>
 
       <label>Acompañantes:</label>
-      <div id="acompanantes"></div>
-      <button type="button" onclick="agregarAcompanante()">+ Agregar acompañante</button>
+      <div id="acompanantesContainer"></div>
+      <button type="button" id="addAcompanante">+ Agregar acompañante</button>
 
       <label>Mensaje:</label>
       <textarea name="Mensaje" rows="3"></textarea>
@@ -141,18 +141,30 @@
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbzd1l34XwkisHZ8J3dmmW6u5YSs2FJUm1uWW1Y7DxxVkWflNtd3TQLFqjXwd9dtUkwIAA/exec";
 
+    // Agregar acompañantes dinámicamente
+    document.getElementById("addAcompanante").addEventListener("click", function() {
+      const container = document.getElementById("acompanantesContainer");
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <input type="text" name="AcompananteNombre[]" placeholder="Nombre del acompañante" required>
+        <button type="button" onclick="this.parentNode.remove()">❌</button>`;
+      container.appendChild(div);
+    });
+
+    // Enviar formulario
     document.getElementById('invitacionForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const formData = new FormData(this);
+      const form = e.target;
+      const data = new FormData(form);
 
-      fetch(scriptURL, { method: 'POST', body: formData })
-        .then(response => response.text())
+      fetch(scriptURL, { method: "POST", body: data })
+        .then(res => res.text())
         .then(text => {
           if (text.includes("OK")) {
-            lanzarConfeti();
             document.getElementById('gracias').style.display = 'block';
-            document.getElementById('invitacionForm').reset();
-            document.getElementById('acompanantes').innerHTML = '';
+            form.reset();
+            document.getElementById('acompanantesContainer').innerHTML = '';
+            lanzarConfeti();
           } else {
             alert("Hubo un problema al registrar tu asistencia. Intenta de nuevo.");
           }
@@ -160,15 +172,7 @@
         .catch(err => alert("Error al enviar el formulario: " + err));
     });
 
-    function agregarAcompanante() {
-      const cont = document.getElementById("acompanantes");
-      const div = document.createElement("div");
-      div.innerHTML = `
-        <input type="text" name="AcompananteNombre[]" placeholder="Nombre del acompañante" required>
-        <button type="button" onclick="this.parentNode.remove()">❌</button>`;
-      cont.appendChild(div);
-    }
-
+    // Confeti y pétalos rojos animados
     function lanzarConfeti() {
       const confetiContainer = document.createElement("div");
       confetiContainer.style.position = "fixed";
@@ -182,7 +186,7 @@
 
       for (let i = 0; i < 50; i++) {
         const petalo = document.createElement("div");
-        petalo.textContent = "🌹";
+        petalo.textContent = "🌹"; // solo pétalos/confeti
         petalo.style.position = "absolute";
         petalo.style.fontSize = Math.random() * 24 + 16 + "px";
         petalo.style.left = Math.random() * 100 + "%";
