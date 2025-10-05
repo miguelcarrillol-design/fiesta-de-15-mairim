@@ -78,6 +78,29 @@
       margin-bottom: 5px;
     }
 
+    #etiquetasAcompanantes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+
+    .etiqueta {
+      background-color: #ffb3b3;
+      color: #660000;
+      padding: 5px 10px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .etiqueta span {
+      margin-left: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
     #gracias {
       text-align: center;
       font-size: 1.3rem;
@@ -98,17 +121,44 @@
       pointer-events: none;
       animation: caer linear forwards;
     }
+
+    #contador {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    #claveAdminWrapper {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    #claveAdminWrapper input {
+      width: auto;
+      display: inline-block;
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>XV.1 Años de Mairim Bermudes García</h1>
+    <h1>XV Años de Mairim Bermudes García</h1>
     <h2>23 de Noviembre de 2025</h2>
     <p>Con gran alegría, te invitamos a celebrar este día tan especial lleno de amor, sueños y gratitud.</p>
   </header>
 
   <main>
     <h3>Confirma tu asistencia</h3>
+
+    <!-- Acceso para ver contador privado -->
+    <div id="claveAdminWrapper">
+      <input type="password" id="claveAdmin" placeholder="Clave para ver contador">
+      <button type="button" id="verContadorBtn">Ver contador</button>
+    </div>
+
+    <div id="contador">Total de personas confirmadas: 0</div>
+
     <form id="invitacionForm">
       <label>Nombre:</label>
       <input type="text" name="Nombre" required>
@@ -133,7 +183,8 @@
         <input type="text" id="nuevoAcompanante" placeholder="Nombre del acompañante">
         <button type="button" id="agregarAcompananteBtn">+ Agregar</button>
       </div>
-      <input type="text" name="Acompanantes" id="acompanantes" readonly placeholder="Todos los acompañantes aparecerán aquí">
+      <div id="etiquetasAcompanantes"></div>
+      <input type="hidden" name="Acompanantes" id="acompanantes">
 
       <label>Mensaje:</label>
       <textarea name="Mensaje" rows="3"></textarea>
@@ -147,25 +198,42 @@
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbzd1l34XwkisHZ8J3dmmW6u5YSs2FJUm1uWW1Y7DxxVkWflNtd3TQLFqjXwd9dtUkwIAA/exec";
 
-    // Agregar acompañantes en un solo campo
+    // ----------------- Manejo de acompañantes -----------------
     const agregarBtn = document.getElementById('agregarAcompananteBtn');
     const nuevoInput = document.getElementById('nuevoAcompanante');
     const acompanantesField = document.getElementById('acompanantes');
+    const etiquetasContainer = document.getElementById('etiquetasAcompanantes');
+    let acompanantesLista = [];
 
     agregarBtn.addEventListener('click', () => {
       const nombre = nuevoInput.value.trim();
       if(nombre){
-        if(acompanantesField.value){
-          acompanantesField.value += ', ' + nombre;
-        } else {
-          acompanantesField.value = nombre;
-        }
+        acompanantesLista.push(nombre);
+        actualizarEtiquetas();
         nuevoInput.value = '';
         nuevoInput.focus();
       }
     });
 
-    // Enviar formulario
+    function actualizarEtiquetas() {
+      etiquetasContainer.innerHTML = '';
+      acompanantesLista.forEach((nombre, index) => {
+        const div = document.createElement('div');
+        div.className = 'etiqueta';
+        div.textContent = nombre;
+        const span = document.createElement('span');
+        span.textContent = '×';
+        span.addEventListener('click', () => {
+          acompanantesLista.splice(index,1);
+          actualizarEtiquetas();
+        });
+        div.appendChild(span);
+        etiquetasContainer.appendChild(div);
+      });
+      acompanantesField.value = acompanantesLista.join(', ');
+    }
+
+    // ----------------- Enviar formulario -----------------
     document.getElementById('invitacionForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const form = e.target;
@@ -177,7 +245,8 @@
           if (text.includes("OK")) {
             document.getElementById('gracias').style.display = 'block';
             form.reset();
-            acompanantesField.value = '';
+            acompanantesLista = [];
+            actualizarEtiquetas();
             lanzarConfeti();
           } else {
             alert("Hubo un problema al registrar tu asistencia. Intenta de nuevo.");
@@ -186,7 +255,7 @@
         .catch(err => alert("Error al enviar el formulario: " + err));
     });
 
-    // Confeti en lluvia
+    // ----------------- Confeti en lluvia -----------------
     function lanzarConfeti() {
       const confetiContainer = document.createElement("div");
       confetiContainer.style.position = "fixed";
@@ -210,6 +279,34 @@
 
       setTimeout(() => confetiContainer.remove(), 5000);
     }
+
+    // ----------------- Contador privado -----------------
+    const verBtn = document.getElementById('verContadorBtn');
+    const claveInput = document.getElementById('claveAdmin');
+    const contadorDiv = document.getElementById('contador');
+    const endpointGet = scriptURL + "?action=count";
+
+    verBtn.addEventListener('click', () => {
+      const clave = claveInput.value.trim();
+      if(clave === "macl"){  // tu clave privada
+        contadorDiv.style.display = "block";
+        actualizarContador();
+        setInterval(actualizarContador, 10000);
+      } else {
+        alert("Clave incorrecta");
+      }
+    });
+
+    function actualizarContador() {
+      fetch(endpointGet)
+        .then(res => res.json())
+        .then(data => {
+          contadorDiv.textContent = 
+            "Total de personas confirmadas: " + data.total + " (Incluye familias y acompañantes)";
+        })
+        .catch(err => console.log("Error al obtener contador:", err));
+    }
+
   </script>
 </body>
 </html>
