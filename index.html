@@ -72,15 +72,10 @@
       background-color: #800000;
     }
 
-    #acompanantesContainer div {
+    #acompananteWrapper {
       display: flex;
-      align-items: center;
-      margin-top: 0.5rem;
-    }
-
-    #acompanantesContainer input {
-      flex: 1;
-      margin-right: 0.5rem;
+      gap: 5px;
+      margin-bottom: 5px;
     }
 
     #gracias {
@@ -134,8 +129,11 @@
       </select>
 
       <label>Acompañantes:</label>
-      <div id="acompanantesContainer"></div>
-      <button type="button" id="addAcompanante">+ Agregar acompañante</button>
+      <div id="acompananteWrapper">
+        <input type="text" id="nuevoAcompanante" placeholder="Nombre del acompañante">
+        <button type="button" id="agregarAcompananteBtn">+ Agregar</button>
+      </div>
+      <input type="text" name="Acompanantes" id="acompanantes" readonly placeholder="Todos los acompañantes aparecerán aquí">
 
       <label>Mensaje:</label>
       <textarea name="Mensaje" rows="3"></textarea>
@@ -149,41 +147,37 @@
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbzd1l34XwkisHZ8J3dmmW6u5YSs2FJUm1uWW1Y7DxxVkWflNtd3TQLFqjXwd9dtUkwIAA/exec";
 
-    // Agregar acompañantes dinámicamente
-    document.getElementById("addAcompanante").addEventListener("click", function() {
-      const container = document.getElementById("acompanantesContainer");
-      const div = document.createElement("div");
-      div.innerHTML = `
-        <input type="text" name="AcompananteNombre[]" placeholder="Nombre del acompañante" required>
-        <button type="button" onclick="this.parentNode.remove()">❌</button>`;
-      container.appendChild(div);
+    // Agregar acompañantes en un solo campo
+    const agregarBtn = document.getElementById('agregarAcompananteBtn');
+    const nuevoInput = document.getElementById('nuevoAcompanante');
+    const acompanantesField = document.getElementById('acompanantes');
+
+    agregarBtn.addEventListener('click', () => {
+      const nombre = nuevoInput.value.trim();
+      if(nombre){
+        if(acompanantesField.value){
+          acompanantesField.value += ', ' + nombre;
+        } else {
+          acompanantesField.value = nombre;
+        }
+        nuevoInput.value = '';
+        nuevoInput.focus();
+      }
     });
 
-    // Enviar formulario y capturar todos los acompañantes
+    // Enviar formulario
     document.getElementById('invitacionForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const form = e.target;
+      const formData = new FormData(form);
 
-      const formData = new FormData();
-
-      // Campos principales
-      form.querySelectorAll('input[name]:not([name="AcompananteNombre[]"]), select[name], textarea[name]').forEach(input => {
-        formData.append(input.name, input.value);
-      });
-
-      // Todos los acompañantes dinámicos
-      form.querySelectorAll('input[name="AcompananteNombre[]"]').forEach(input => {
-        formData.append('AcompananteNombre[]', input.value);
-      });
-
-      // Enviar al Apps Script
       fetch(scriptURL, { method: "POST", body: formData })
         .then(res => res.text())
         .then(text => {
           if (text.includes("OK")) {
             document.getElementById('gracias').style.display = 'block';
             form.reset();
-            document.getElementById('acompanantesContainer').innerHTML = '';
+            acompanantesField.value = '';
             lanzarConfeti();
           } else {
             alert("Hubo un problema al registrar tu asistencia. Intenta de nuevo.");
